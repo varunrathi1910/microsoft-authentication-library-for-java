@@ -495,7 +495,7 @@ class ManagedIdentityTests {
 
         HttpResponse response = new HttpResponse();
         response.statusCode(HttpStatus.SC_UNAUTHORIZED);
-        response.headers().put("WWW-Authenticate", Collections.singletonList("Basic realm=filepath=somepath"));
+        response.headers().put("WWW-Authenticate", Collections.singletonList("xyz"));
 
         when(httpClientMock.send(any())).thenReturn(response);
 
@@ -518,7 +518,7 @@ class ManagedIdentityTests {
             MsalManagedIdentityException miException = (MsalManagedIdentityException) exception.getCause();
             assertEquals(ManagedIdentitySourceType.AZURE_ARC, miException.managedIdentitySourceType);
             assertEquals(MsalError.MANAGED_IDENTITY_REQUEST_FAILED, miException.errorCode());
-            assertEquals(MsalErrorMessage.MANAGED_IDENTITY_INVALID_CHALLENGE, miException.getMessage());
+            assertEquals(MsalErrorMessage.MANAGED_IDENTITY_NO_CHALLENGE_ERROR, miException.getMessage());
             return;
         }
 
